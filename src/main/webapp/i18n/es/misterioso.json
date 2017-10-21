@@ -1,0 +1,33 @@
+{
+    "wplayMisteriosoApp": {
+        "misterioso" : {
+            "home": {
+                "title": "Misteriosos",
+                "createLabel": "Crear nuevo Misterioso",
+                "createOrEditLabel": "Crear o editar Misterioso"
+            },
+            "created": "Un nuevo Misterioso ha sido creado con el identificador {{ param }}",
+            "updated": "Un Misterioso ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Misterioso ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Misterioso {{ id }}?"
+            },
+            "detail": {
+                "title": "Misterioso"
+            },
+            "nombre": "Nombre",
+            "acumulado": "Acumulado",
+            "cantidad_apuestas": "Cantidad Apuestas",
+            "porcentaje_ticket": "Porcentaje Ticket",
+            "valor_base_min": "Valor Base Min",
+            "valor_base_max": "Valor Base Max",
+            "minimo_ticket": "Minimo Ticket",
+            "maximo_ticket": "Maximo Ticket",
+            "ganador": "Ganador",
+            "estado": "Estado",
+            "descripcion": "Descripcion",
+            "cantidad_apuestas_minima": "Cantidad Apuestas Minima",
+            "cantidad_apuestas_maxima": "Cantidad Apuestas Maxima"
+        }
+    }
+}

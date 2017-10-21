@@ -1,0 +1,14 @@
+version: '2'
+services:
+    wplay_misterioso-app:
+        image: wplay_misterioso
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://wplay_misterioso-postgresql:5432/wplay_misterioso
+            - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
+        ports:
+            - 8080:8080
+    wplay_misterioso-postgresql:
+        extends:
+            file: postgresql.yml
+            service: wplay_misterioso-postgresql

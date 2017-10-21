@@ -1,0 +1,9 @@
+{
+    "wplayMisteriosoApp": {
+        "EstadoGanador" : {
+            "null": "",
+            "PENDIENTE": "PENDIENTE",
+            "GANADO": "GANADO"
+        }
+    }
+}

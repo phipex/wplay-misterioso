@@ -1,0 +1,92 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="desarrollo-pc (generated)" id="1508620412827-1">
+        <createTable tableName="misterioso">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="misteriosoPK"/>
+            </column>
+            <column name="acumulado" type="numeric(10, 2)"/>
+            <column name="cantidad_apuestas" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cantidad_apuestas_maxima" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cantidad_apuestas_minima" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="descripcion" type="VARCHAR(1024)"/>
+            <column name="estado" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ganador" type="VARCHAR(255)"/>
+            <column name="maximo_ticket" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="minimo_ticket" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="nombre" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="porcentaje_ticket" type="FLOAT4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="valor_base_max" type="numeric(10, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="valor_base_min" type="numeric(10, 2)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="desarrollo-pc (generated)" id="1508620412827-2">
+        <createTable tableName="ticket">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="ticketPK"/>
+            </column>
+            <column name="cantidad_apuestas" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fecha" type="BYTEA">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_fuente" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="participa_misterioso" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="valor_total" type="numeric(10, 2)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="desarrollo-pc (generated)" id="1508620412827-3">
+        <createTable tableName="ticket_ganador">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="ticket_ganadorPK"/>
+            </column>
+            <column name="descripcion" type="VARCHAR(1024)"/>
+            <column name="estado" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fecha" type="BYTEA"/>
+            <column name="indice_ticket_misterioso" type="INT"/>
+            <column name="valor_ganado" type="numeric(10, 2)"/>
+            <column name="misterioso_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ticket_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="desarrollo-pc (generated)" id="1508620412827-4">
+        <addUniqueConstraint columnNames="ticket_id" constraintName="UC_TICKET_GANADORTICKET_ID_COL" tableName="ticket_ganador"/>
+    </changeSet>
+    <changeSet author="desarrollo-pc (generated)" id="1508620412827-5">
+        <addForeignKeyConstraint baseColumnNames="misterioso_id" baseTableName="ticket_ganador" constraintName="FK4cn4nr6icbuq53xncd3ul8ss8" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="misterioso"/>
+    </changeSet>
+    <changeSet author="desarrollo-pc (generated)" id="1508620412827-6">
+        <addForeignKeyConstraint baseColumnNames="ticket_id" baseTableName="ticket_ganador" constraintName="FK4kpip1e29gidic1lm0lmgqw4b" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="ticket"/>
+    </changeSet>
+</databaseChangeLog>
