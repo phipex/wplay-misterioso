@@ -134,7 +134,7 @@ public class MisteriosoServiceImpl implements MisteriosoService{
     	for (Misterioso misterioso : misteriososParticipa) {
     		// actualizar el ticket con la info de los misteriosos que participa
         	String misteriosoParticipa = ticket.getParticipa_misterioso();
-    		misteriosoParticipa = misteriosoParticipa +","+ Long.toString(misterioso.getId());
+    		misteriosoParticipa = misteriosoParticipa + Long.toString(misterioso.getId())+",";
     		
     		ticket.setParticipa_misterioso(misteriosoParticipa);
     		
@@ -159,6 +159,8 @@ public class MisteriosoServiceImpl implements MisteriosoService{
     			//reinicia los valores del misterioso
     			reiniciaMisterioso(misterioso);
     			
+    			misteriosoRepository.save(misterioso)
+    			
     			break;
     			
     		}else{// si no es ganador
@@ -181,16 +183,22 @@ public class MisteriosoServiceImpl implements MisteriosoService{
     			
     			BigDecimal cantidadASumar = null;
     			
-    			//si no es mayor que el limite agregar al acumulado o lo que le falte
-    			final boolean superaAcumulado = maximoAcumulado.compareTo(futuroAcumulado) < 0;
+    			final int compareTo = maximoAcumulado.compareTo(futuroAcumulado);
+				//si no es mayor que el limite agregar al acumulado o lo que le falte
+    			final boolean superaAcumulado = compareTo < 0;
+    			final boolean llegoLimite = compareTo == 0;
     			
 				if(superaAcumulado ) {
-    				cantidadASumar = futuroAcumulado.subtract(maximoAcumulado);
+    				cantidadASumar = maximoAcumulado.subtract(cantidadActual);
+    				
+    			}else if(llegoLimite) {
+    				cantidadASumar = BigDecimal.ZERO;
     				
     			}else {
     				cantidadASumar = cantidadAporte;
     			}
     			
+				
     			final BigDecimal nuevoAcumulado = cantidadActual.add(cantidadASumar);
     			
     			misterioso.setAcumulado(nuevoAcumulado);
@@ -220,7 +228,7 @@ public class MisteriosoServiceImpl implements MisteriosoService{
     	
     	misterioso.setCantidad_apuestas(0);
     	
-    	//TODO crear nuevo ganador aleatorio
+    	//TODO FIXME crear nuevo ganador aleatorio
     	
     }
     
