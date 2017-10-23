@@ -45,6 +45,12 @@ public class TicketGanadorServiceImpl implements TicketGanadorService{
         return ticketGanadorMapper.toDto(ticketGanador);
     }
 
+    @Override
+	public TicketGanadorDTO save(TicketGanador ticketGanador) {
+    	ticketGanador = ticketGanadorRepository.save(ticketGanador);
+        return ticketGanadorMapper.toDto(ticketGanador);
+	}
+    
     /**
      *  Get all the ticketGanadors.
      *
@@ -83,4 +89,6 @@ public class TicketGanadorServiceImpl implements TicketGanadorService{
         log.debug("Request to delete TicketGanador : {}", id);
         ticketGanadorRepository.delete(id);
     }
+
+	
 }
