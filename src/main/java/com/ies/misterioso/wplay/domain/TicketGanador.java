@@ -32,6 +32,8 @@ public class TicketGanador implements Serializable {
     @Column(name = "estado", nullable = false)
     private EstadoGanador estado;
 
+    @DecimalMin(value = "0")
+    @DecimalMax(value = "100000000")
     @Column(name = "valor_ganado", precision=10, scale=2)
     private BigDecimal valor_ganado;
 
@@ -53,7 +55,34 @@ public class TicketGanador implements Serializable {
     @JoinColumn(unique = true)
     private Ticket ticket;
 
-    // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
+    
+    
+
+	/**
+	 * @param estado
+	 * @param valor_ganado
+	 * @param descripcion
+	 * @param indice_ticket_misterioso
+	 * @param misterioso
+	 * @param ticket
+	 */
+	public TicketGanador(EstadoGanador estado, BigDecimal valorGanado, String descripcion,
+			Integer indiceTicketMisterioso, Misterioso misterioso, Ticket ticket) {
+		this.id = 0L;
+		this.fecha = ZonedDateTime.now();
+		this.estado = estado;
+		this.valor_ganado = valorGanado;
+		this.descripcion = descripcion;
+		this.indice_ticket_misterioso = indiceTicketMisterioso;
+		this.misterioso = misterioso;
+		this.ticket = ticket;
+	}
+
+	public TicketGanador() {
+		
+	}
+
+	// jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
