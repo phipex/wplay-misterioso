@@ -12,7 +12,12 @@ import java.util.Objects;
  */
 public class TicketDTO implements Serializable {
 
-    private Long id;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 9088645195832642245L;
+
+	private Long id;
 
     @NotNull
     private String id_fuente;
@@ -21,12 +26,13 @@ public class TicketDTO implements Serializable {
     private Integer cantidad_apuestas;
 
     @NotNull
+    @DecimalMax(value = "100000000")
     private BigDecimal valor_total;
 
-    @NotNull
+    //@NotNull
     private ZonedDateTime fecha;
 
-    @NotNull
+    //@NotNull
     private String participa_misterioso;
 
     public Long getId() {
