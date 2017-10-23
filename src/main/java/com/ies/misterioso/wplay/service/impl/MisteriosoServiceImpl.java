@@ -13,6 +13,7 @@ import com.ies.misterioso.wplay.service.dto.TicketGanadorDTO;
 import com.ies.misterioso.wplay.service.mapper.MisteriosoMapper;
 
 import java.math.BigDecimal;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.token.SecureRandomFactoryBean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -159,7 +161,7 @@ public class MisteriosoServiceImpl implements MisteriosoService{
     			//reinicia los valores del misterioso
     			reiniciaMisterioso(misterioso);
     			
-    			misteriosoRepository.save(misterioso)
+    			misteriosoRepository.save(misterioso);
     			
     			break;
     			
@@ -228,9 +230,23 @@ public class MisteriosoServiceImpl implements MisteriosoService{
     	
     	misterioso.setCantidad_apuestas(0);
     	
-    	//TODO FIXME crear nuevo ganador aleatorio
+    	//crear nuevo ganador aleatorio
+    	
+    	final int cantidad_apuestas_maxima = misterioso.getMaximo_ticket();
+    	final int cantidad_apuestas_minima = misterioso.getMinimo_ticket();
+    	final int rango_apuestas = cantidad_apuestas_maxima - cantidad_apuestas_minima;
+    	
+    	SecureRandom secure = new SecureRandom();
+    	
+    	final int nextInt = secure.nextInt(rango_apuestas);
+    	
+    	final int nuevoGanador = nextInt + cantidad_apuestas_minima;
+    	
+    	misterioso.setGanador(nuevoGanador+"");//FIXME cambiar para que quede encriptado
     	
     }
+    
+    
     
     
 	@Override
