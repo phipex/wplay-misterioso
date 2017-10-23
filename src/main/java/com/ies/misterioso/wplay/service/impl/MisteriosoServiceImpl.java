@@ -1,6 +1,7 @@
 package com.ies.misterioso.wplay.service.impl;
 
 import com.ies.misterioso.wplay.service.MisteriosoService;
+import com.ies.misterioso.wplay.service.TicketGanadorService;
 import com.ies.misterioso.wplay.domain.Misterioso;
 import com.ies.misterioso.wplay.domain.Ticket;
 import com.ies.misterioso.wplay.domain.TicketGanador;
@@ -8,6 +9,7 @@ import com.ies.misterioso.wplay.domain.enumeration.EstadoGanador;
 import com.ies.misterioso.wplay.repository.MisteriosoRepository;
 import com.ies.misterioso.wplay.service.dto.MisteriosoDTO;
 import com.ies.misterioso.wplay.service.dto.RetornoTicketDTO;
+import com.ies.misterioso.wplay.service.dto.TicketGanadorDTO;
 import com.ies.misterioso.wplay.service.mapper.MisteriosoMapper;
 
 import java.math.BigDecimal;
@@ -35,9 +37,12 @@ public class MisteriosoServiceImpl implements MisteriosoService{
 
     private final MisteriosoMapper misteriosoMapper;
 
-    public MisteriosoServiceImpl(MisteriosoRepository misteriosoRepository, MisteriosoMapper misteriosoMapper) {
+    private final TicketGanadorService ticketGanadorService;
+    
+    public MisteriosoServiceImpl(MisteriosoRepository misteriosoRepository, MisteriosoMapper misteriosoMapper, TicketGanadorService ticketGanadorService) {
         this.misteriosoRepository = misteriosoRepository;
         this.misteriosoMapper = misteriosoMapper;
+        this.ticketGanadorService = ticketGanadorService;
     }
 
     /**
@@ -93,7 +98,8 @@ public class MisteriosoServiceImpl implements MisteriosoService{
         misteriosoRepository.delete(id);
     }
 
-    
+    @Override
+    @Transactional(readOnly = true)
     public List<MisteriosoDTO> getAllMisterioso(){
     	
     	List<MisteriosoDTO> all = new ArrayList<>();
@@ -112,12 +118,12 @@ public class MisteriosoServiceImpl implements MisteriosoService{
     	return all;
     }
     
-    
+    @Override
     public RetornoTicketDTO verificaGanador(Ticket ticket) {
     	
     	RetornoTicketDTO retornoGanador = new RetornoTicketDTO();
     	
-    	
+    	TicketGanadorDTO ticketGanadorDto = null;
     	
     	//traer los misteriosos que participan
     	final Integer cantidadApuestas = ticket.getCantidad_apuestas();
@@ -128,7 +134,7 @@ public class MisteriosoServiceImpl implements MisteriosoService{
     	for (Misterioso misterioso : misteriososParticipa) {
     		// actualizar el ticket con la info de los misteriosos que participa
         	String misteriosoParticipa = ticket.getParticipa_misterioso();
-    		misteriosoParticipa = misteriosoParticipa + Long.toString(misterioso.getId());
+    		misteriosoParticipa = misteriosoParticipa +","+ Long.toString(misterioso.getId());
     		
     		ticket.setParticipa_misterioso(misteriosoParticipa);
     		
@@ -139,8 +145,21 @@ public class MisteriosoServiceImpl implements MisteriosoService{
     		boolean isGanador = isGanador(misterioso, cantidadTicket);
     		
     		if(isGanador) {//si es ganador
-    			//TODO crear el registro de ganador
-    			//TODO reinicia los valores del misterioso
+    			//crear el registro de ganador
+    			EstadoGanador estado = EstadoGanador.GANADO; 
+    			BigDecimal valorGanado = misterioso.getAcumulado();
+    			String descripcion =  null;
+    			Integer indiceTicketMisterioso = cantidadTicket;
+    			
+    			TicketGanador ticketGanador = new TicketGanador(estado, valorGanado, descripcion,
+    					indiceTicketMisterioso, misterioso, ticket);
+    			
+    			ticketGanadorDto = ticketGanadorService.save(ticketGanador);
+    			    			
+    			//reinicia los valores del misterioso
+    			reiniciaMisterioso(misterioso);
+    			
+    			break;
     			
     		}else{// si no es ganador
     			
@@ -154,14 +173,22 @@ public class MisteriosoServiceImpl implements MisteriosoService{
     			
     			final Float porcentajeTicket = misterioso.getPorcentaje_ticket();
     			
-    			BigDecimal cantidadASumar = percentage(valorApuestaTicket, new BigDecimal(porcentajeTicket));
+    			BigDecimal cantidadAporte = percentage(valorApuestaTicket, new BigDecimal(porcentajeTicket));
     			
-    			//TODO si no es mayor que el limite agregar al acumulado o lo que le falte
+    			BigDecimal futuroAcumulado = cantidadActual.add(cantidadAporte);
     			
     			final BigDecimal maximoAcumulado = misterioso.getValor_base_max();
     			
-    			if(maximoAcumulado.compareTo(cantidadASumar) ) {
+    			BigDecimal cantidadASumar = null;
+    			
+    			//si no es mayor que el limite agregar al acumulado o lo que le falte
+    			final boolean superaAcumulado = maximoAcumulado.compareTo(futuroAcumulado) < 0;
+    			
+				if(superaAcumulado ) {
+    				cantidadASumar = futuroAcumulado.subtract(maximoAcumulado);
     				
+    			}else {
+    				cantidadASumar = cantidadAporte;
     			}
     			
     			final BigDecimal nuevoAcumulado = cantidadActual.add(cantidadASumar);
@@ -173,27 +200,38 @@ public class MisteriosoServiceImpl implements MisteriosoService{
     		}
 		}
     	
+    	retornoGanador.setListaMisteriososActualizados(listEntityToListDTO(misteriososParticipa));
     	
-    	//final List<MisteriosoDTO> allMisteriosos = getAllMisterioso();
-    	
-    	
-    	
-    	//retornoGanador.setListaMisteriososActualizados(listaMisteriososActualizados);
-    	
-    	
-    	
-    	//retornoGanador.setTicketDTO(ticketDTO);//TODO hay que importar el mapper o hacer algo en el dto
+    	retornoGanador.setGanadorDTO(ticketGanadorDto);
     	
     	
     	return retornoGanador;
     }    
     
+    private void reiniciaMisterioso(Misterioso misterioso) {
+    	
+    	//reiniciar el acumulado
+    	
+    	BigDecimal nuevoAcumulado = misterioso.getValor_base_min();
+    	
+    	misterioso.setAcumulado(nuevoAcumulado);
+    	
+    	//reiniciar la cantidad de ticket
+    	
+    	misterioso.setCantidad_apuestas(0);
+    	
+    	//TODO crear nuevo ganador aleatorio
+    	
+    }
+    
+    
 	@Override
+	@Transactional(readOnly = true)
 	public List<Misterioso> findMisteriosoParticipa(int cantidadApuestas) {
 		
-		String scantidadApuestas = Integer.toString(cantidadApuestas);
 		
-		return misteriosoRepository.findByCantidadApuestasMax(scantidadApuestas);
+		
+		return misteriosoRepository.findByCantidadApuestasMax(cantidadApuestas);
 	}
     
 	/**
@@ -204,7 +242,7 @@ public class MisteriosoServiceImpl implements MisteriosoService{
 	 */
     private boolean isGanador(Misterioso misterioso, int cantidadTicket) {
     	
-    	int ticketGanador = Integer.valueOf(misterioso.getGanador()); 
+    	int ticketGanador = Integer.parseInt(misterioso.getGanador()); 
     	
     	return ticketGanador == cantidadTicket;
     }
@@ -218,5 +256,18 @@ public class MisteriosoServiceImpl implements MisteriosoService{
     public static BigDecimal percentage(BigDecimal base, BigDecimal pct){
         return base.multiply(pct).divide(new BigDecimal(100));
     }
+    
+    private List<MisteriosoDTO> listEntityToListDTO(List<Misterioso> misteriosos){
+    	
+    	List<MisteriosoDTO> misteriososDtos = new ArrayList<>();
+    	
+    	for (Misterioso misterioso : misteriosos) {
+    		final MisteriosoDTO misteriosoDto = misteriosoMapper.toDto(misterioso);
+    		misteriososDtos.add(misteriosoDto);
+		}
+    	
+    	return misteriososDtos;
+    }
+    
     
 }
