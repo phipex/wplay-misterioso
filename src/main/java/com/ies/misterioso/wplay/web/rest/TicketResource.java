@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import com.ies.misterioso.wplay.service.TicketService;
 import com.ies.misterioso.wplay.web.rest.util.HeaderUtil;
 import com.ies.misterioso.wplay.web.rest.util.PaginationUtil;
+import com.ies.misterioso.wplay.service.dto.RetornoTicketDTO;
 import com.ies.misterioso.wplay.service.dto.TicketDTO;
 import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -60,6 +61,31 @@ public class TicketResource {
             .body(result);
     }
 
+    /**
+     * POST  /tickets :analiza si el ticket es un ganador
+     * 
+     * @param ticketDTO the ticketDTO to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new ticketDTO, or with status 400 (Bad Request) if the ticket has already an ID
+     * @throws URISyntaxException  if the Location URI syntax is incorrect
+     */
+    @PostMapping("/analizaticket")
+    @Timed
+    public ResponseEntity<RetornoTicketDTO> analizaTicket(@Valid @RequestBody TicketDTO ticketDTO) throws URISyntaxException {
+	    log.debug("REST request to save Ticket : {}", ticketDTO);
+	    if (ticketDTO.getId() != null) {
+	        return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new ticket cannot already have an ID")).body(null);
+	    }
+	    RetornoTicketDTO result = ticketService.nuevoTicket(ticketDTO);
+	    final Long idNewTicket = result.getTicketDTO().getId();
+	    
+	    return ResponseEntity.created(new URI("/api/tickets/" + idNewTicket))
+	        .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, idNewTicket.toString()))
+	        .body(result);
+    	
+    }
+    
+    
+    
     /**
      * PUT  /tickets : Updates an existing ticket.
      *
