@@ -49,45 +49,47 @@ public class MisteriosoServiceImpl implements MisteriosoService{
 
     private final MisteriosoMapper misteriosoMapper;
 
-    private volatile static ConcurrentMap<Long, AtomicLong> ganadores;
+    /**
+     * contiene los ganadores para cada misterioso
+     */
+    private static volatile ConcurrentMap<Long, AtomicLong> ganadores;
     
+    /**
+     * contiene el ultimo ganador 
+     */
+	private static volatile ConcurrentMap<Long, AtomicLong> ultimosGanadores;
     
-	private volatile static ConcurrentMap<Long, String> ultimosGanadores;
+	/**
+	 * indice de los tickets para cada misterioso
+	 */
+    private static volatile ConcurrentMap<Long, LongAdder> indexTicketByMisterioso;
     
-    private volatile static ConcurrentMap<Long, LongAdder> indexTicketByMisterioso;
-    
-    private static synchronized final ConcurrentMap<Long, AtomicLong> getGanadores() {
+    private static final synchronized ConcurrentMap<Long, AtomicLong> getGanadores() {
 		if(ganadores == null) {
-			ganadores = new ConcurrentHashMap<Long, AtomicLong>();
+			ganadores = new ConcurrentHashMap<>();
 		}
-    	
-    	
+        	
     	return ganadores;
 	}
     
-    private static synchronized final ConcurrentMap<Long, String> getUltimosGanadores() {
+    private static final synchronized ConcurrentMap<Long, AtomicLong> getUltimosGanadores() {
 		
     	if(ultimosGanadores == null) {
-    		ultimosGanadores = new ConcurrentHashMap<Long, String>();
+    		ultimosGanadores = new ConcurrentHashMap<>();
     	}
     	
     	return ultimosGanadores;
 	}
 
-	
-
-	private static synchronized final ConcurrentMap<Long, LongAdder> getIndexTicketByMisterioso() {
+	private static final synchronized ConcurrentMap<Long, LongAdder> getIndexTicketByMisterioso() {
 		if(indexTicketByMisterioso == null) {
-			indexTicketByMisterioso = new ConcurrentHashMap<Long, LongAdder>();
+			indexTicketByMisterioso = new ConcurrentHashMap<>();
 		}
 		
 		return indexTicketByMisterioso;
 	}
 
-	
-	
-    
-    public MisteriosoServiceImpl(MisteriosoRepository misteriosoRepository, MisteriosoMapper misteriosoMapper) {
+	public MisteriosoServiceImpl(MisteriosoRepository misteriosoRepository, MisteriosoMapper misteriosoMapper) {
         this.misteriosoRepository = misteriosoRepository;
         this.misteriosoMapper = misteriosoMapper;
         
@@ -189,7 +191,7 @@ public class MisteriosoServiceImpl implements MisteriosoService{
     		if(salir) {
     			ticketGanadorDto = ticketGanadorTemDto;
     			
-    			log.debug("ticketGanadorDto ----------{}",ticketGanadorDto);
+    			log.debug("ticketGanadorDto ---------{}",ticketGanadorDto);
     			break;
     		}
     		
@@ -226,7 +228,7 @@ public class MisteriosoServiceImpl implements MisteriosoService{
 		
 		if(superaLimite) {
 			
-			log.debug("supera limite ---------");
+			log.debug("supera limite --------");
 			
 			reiniciaMisterioso(misterioso);
 			
@@ -331,7 +333,7 @@ public class MisteriosoServiceImpl implements MisteriosoService{
     	
     	boolean noContainsKey = !MisteriosoServiceImpl.getIndexTicketByMisterioso().containsKey(idMisterioso);
     	
-    	log.debug("incrementTicketMisterioso::incrementTicketMisterioso::indice de contadores de ticket {}",indexTicketByMisterioso);
+    	//log.debug("incrementTicketMisterioso::incrementTicketMisterioso::indice de contadores de ticket {}",indexTicketByMisterioso);
     	
     	if(noContainsKey) {
     		
@@ -348,8 +350,7 @@ public class MisteriosoServiceImpl implements MisteriosoService{
     	}
     	
     	log.debug("incrementTicketMisterioso::incrementTicketMisterioso::cantidad maxima {}  contador {}",cantidadApuestasMaxima,contadorTicket.sum());
-    	
-    	
+    	  	
     	
     	if(cantidadApuestasMaxima >= contadorTicket.sum()) {
     		   		
@@ -390,24 +391,31 @@ public class MisteriosoServiceImpl implements MisteriosoService{
     	
     	final long nuevoGanador = nextInt + (long)cantidadApuestasMinima;
     	
-    	AtomicLong atomicNuevoGanador = new AtomicLong(nuevoGanador);
+    	//AtomicLong atomicNuevoGanador = new AtomicLong(nuevoGanador);
     	
     	misterioso.setGanador(nuevoGanador+"");//FIXME cambiar para que quede encriptado
     	
-    	MisteriosoServiceImpl.getGanadores().putIfAbsent(idMisterioso, atomicNuevoGanador);
+    	//MisteriosoServiceImpl.getGanadores().putIfAbsent(idMisterioso, atomicNuevoGanador);
+    	final AtomicLong atomicGanador = MisteriosoServiceImpl.getGanadores().get(idMisterioso);
     	
-    	log.debug("reiniciaMisterioso::ganadores {}",MisteriosoServiceImpl.getGanadores());
+    	atomicGanador.set(nuevoGanador);
+    	
+    	//log.debug("reiniciaMisterioso::ganadores {}",MisteriosoServiceImpl.getGanadores());
     	
     	//reiniciar la cantidad de ticket
-    	misterioso.setCantidad_apuestas(0);
+    	
     	//indexTicketByMisterioso.putIfAbsent(idMisterioso, new LongAdder());
     	LongAdder longAdder = MisteriosoServiceImpl.getIndexTicketByMisterioso().get(idMisterioso);
+    	longAdder.reset();
     	
-    	log.debug("reiniciaMisterioso::indexTicketByMisterioso {}",MisteriosoServiceImpl.getIndexTicketByMisterioso());
+    	misterioso.setCantidad_apuestas(0);
+    	
+    	
+    	//log.debug("reiniciaMisterioso::indexTicketByMisterioso {}",MisteriosoServiceImpl.getIndexTicketByMisterioso());
     	
     	misteriosoRepository.save(misterioso);
     	
-    	longAdder.reset();    
+    	  
     	
     	log.debug("reiniciaMisterioso::reiniciando misterioso {}",misterioso);
     	
@@ -461,10 +469,10 @@ public class MisteriosoServiceImpl implements MisteriosoService{
     		
         	ticketGanador = Long.parseLong(ganadorMisterioso);
         	
-        	MisteriosoServiceImpl.getGanadores().putIfAbsent(idMisterioso, new AtomicticketGanador);
+        	MisteriosoServiceImpl.getGanadores().putIfAbsent(idMisterioso, new AtomicLong(ticketGanador));
     	}
     	
-    	String ganador = ticketGanador+"";
+    	//String ganador = ticketGanador+"";
     	
     	boolean dentroRango = cantidadTicket < cantidadApuestasMaxima;
 		
@@ -489,21 +497,20 @@ public class MisteriosoServiceImpl implements MisteriosoService{
 		if(noContainsKey) {
 			
 			isGanador = true;
-			ultimosGanadores.putIfAbsent(idMisterioso, ganador+"");
-			log.debug("isGanador::estado actual del map {}",MisteriosoServiceImpl.getUltimosGanadores());
+			MisteriosoServiceImpl.getUltimosGanadores().putIfAbsent(idMisterioso, new AtomicLong(ticketGanador));
+			//log.debug("isGanador::estado actual del map {}",MisteriosoServiceImpl.getUltimosGanadores());
 		}else {
-			String ultimoGanador = MisteriosoServiceImpl.getUltimosGanadores().get(idMisterioso);
+			Long ultimoGanador = MisteriosoServiceImpl.getUltimosGanadores().get(idMisterioso).get();
 			
-			isGanador = !ganador.equals(ultimoGanador);
+			isGanador = !ticketGanador.equals(ultimoGanador);
 			
-			log.debug("isGanador::ultimo ganador {}, ganador que pregunta {}, isganador {}",ultimoGanador,ganador,isGanador);
-			
+			log.debug("isGanador::ultimo ganador {}, ganador que pregunta {}, isganador {}",ultimoGanador,ticketGanador,isGanador);
 			
 			if(isGanador) {
-				MisteriosoServiceImpl.getUltimosGanadores().putIfAbsent(idMisterioso, ganador);
+				MisteriosoServiceImpl.getUltimosGanadores().putIfAbsent(idMisterioso, new AtomicLong(ticketGanador));
 				isGanador = true;
 			}
-			log.debug("isGanador::estado actual del map {}",MisteriosoServiceImpl.getUltimosGanadores());
+			//log.debug("isGanador::estado actual del map {}",MisteriosoServiceImpl.getUltimosGanadores());
 			
 		}
     	
