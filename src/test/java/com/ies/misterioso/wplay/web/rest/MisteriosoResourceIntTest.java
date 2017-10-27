@@ -57,8 +57,8 @@ public class MisteriosoResourceIntTest {
     private static final BigDecimal DEFAULT_VALOR_BASE_MIN = new BigDecimal(1);
     private static final BigDecimal UPDATED_VALOR_BASE_MIN = new BigDecimal(2);
 
-    private static final BigDecimal DEFAULT_VALOR_BASE_MAX = new BigDecimal(1);
-    private static final BigDecimal UPDATED_VALOR_BASE_MAX = new BigDecimal(2);
+    private static final BigDecimal DEFAULT_VALOR_BASE_MAX = new BigDecimal(100000000);
+    private static final BigDecimal UPDATED_VALOR_BASE_MAX = new BigDecimal(99999999);
 
     private static final Integer DEFAULT_MINIMO_TICKET = 1;
     private static final Integer UPDATED_MINIMO_TICKET = 2;

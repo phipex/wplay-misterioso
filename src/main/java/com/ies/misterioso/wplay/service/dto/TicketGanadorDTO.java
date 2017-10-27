@@ -8,6 +8,9 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
+
+import com.ies.misterioso.wplay.domain.Misterioso;
+import com.ies.misterioso.wplay.domain.Ticket;
 import com.ies.misterioso.wplay.domain.enumeration.EstadoGanador;
 
 /**
@@ -20,6 +23,8 @@ public class TicketGanadorDTO implements Serializable {
     @NotNull
     private EstadoGanador estado;
 
+    @DecimalMin(value = "0")
+    @DecimalMax(value = "100000000")
     private BigDecimal valor_ganado;
 
     private ZonedDateTime fecha;
@@ -33,6 +38,23 @@ public class TicketGanadorDTO implements Serializable {
 
     private Long ticketId;
 
+    public TicketGanadorDTO() {
+    	
+    }
+    
+    public TicketGanadorDTO(EstadoGanador estado, BigDecimal valorGanado, String descripcion,
+			Integer indiceTicketMisterioso, Misterioso misterioso, Ticket ticket) {
+		this.id = 0L;
+		this.fecha = ZonedDateTime.now();
+		this.estado = estado;
+		this.valor_ganado = valorGanado;
+		this.descripcion = descripcion;
+		this.indice_ticket_misterioso = indiceTicketMisterioso;
+		this.misteriosoId = misterioso.getId();
+		this.ticketId = ticket.getId();
+	}
+    
+    
     public Long getId() {
         return id;
     }

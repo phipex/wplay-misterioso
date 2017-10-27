@@ -41,11 +41,15 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="wplayMisteriosoApp.ticket.valor_total" for="field_valor_total">Valor Total</label>
             <input type="number" class="form-control" name="valor_total" id="field_valor_total"
-                [(ngModel)]="ticket.valor_total" required />
+                [(ngModel)]="ticket.valor_total" required max="100000000" />
             <div [hidden]="!(editForm.controls.valor_total?.dirty && editForm.controls.valor_total?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.valor_total?.errors?.required" jhiTranslate="entity.validation.required">
                    This field is required.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.valor_total?.errors?.max" jhiTranslate="entity.validation.max" translateValues="{ max: 100000000 }">
+                    This field cannot be more than 100000000.
                 </small>
                 <small class="form-text text-danger"
                     [hidden]="!editForm.controls.valor_total?.errors?.number" jhiTranslate="entity.validation.number">

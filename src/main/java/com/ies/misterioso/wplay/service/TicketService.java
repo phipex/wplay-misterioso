@@ -1,5 +1,6 @@
 package com.ies.misterioso.wplay.service;
 
+import com.ies.misterioso.wplay.service.dto.RetornoTicketDTO;
 import com.ies.misterioso.wplay.service.dto.TicketDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,4 +40,6 @@ public interface TicketService {
      *  @param id the id of the entity
      */
     void delete(Long id);
+
+	RetornoTicketDTO nuevoTicket(TicketDTO ticketDTO);
 }

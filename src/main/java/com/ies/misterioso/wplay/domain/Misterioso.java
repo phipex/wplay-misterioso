@@ -31,6 +31,7 @@ public class Misterioso implements Serializable {
     private String nombre;
 
     @DecimalMin(value = "0")
+    @DecimalMax(value = "100000000")
     @Column(name = "acumulado", precision=10, scale=2)
     private BigDecimal acumulado;
 
@@ -48,6 +49,7 @@ public class Misterioso implements Serializable {
     private BigDecimal valor_base_min;
 
     @NotNull
+    @DecimalMax(value = "100000000")
     @Column(name = "valor_base_max", precision=10, scale=2, nullable = false)
     private BigDecimal valor_base_max;
 

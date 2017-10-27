@@ -1,10 +1,19 @@
 package com.ies.misterioso.wplay.service.impl;
 
+import com.ies.misterioso.wplay.service.MisteriosoService;
+import com.ies.misterioso.wplay.service.TicketGanadorService;
 import com.ies.misterioso.wplay.service.TicketService;
 import com.ies.misterioso.wplay.domain.Ticket;
 import com.ies.misterioso.wplay.repository.TicketRepository;
+import com.ies.misterioso.wplay.service.dto.MisteriosoDTO;
+import com.ies.misterioso.wplay.service.dto.RetornoTicketDTO;
 import com.ies.misterioso.wplay.service.dto.TicketDTO;
+import com.ies.misterioso.wplay.service.dto.TicketGanadorDTO;
 import com.ies.misterioso.wplay.service.mapper.TicketMapper;
+
+import java.time.ZonedDateTime;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -25,10 +34,16 @@ public class TicketServiceImpl implements TicketService{
     private final TicketRepository ticketRepository;
 
     private final TicketMapper ticketMapper;
+    
+    private final MisteriosoService misteriosoService;
+    
+    private final TicketGanadorService ticketGanadorService;
 
-    public TicketServiceImpl(TicketRepository ticketRepository, TicketMapper ticketMapper) {
+    public TicketServiceImpl(TicketRepository ticketRepository, TicketMapper ticketMapper, MisteriosoService misteriosoService, TicketGanadorService ticketGanadorService) {
         this.ticketRepository = ticketRepository;
         this.ticketMapper = ticketMapper;
+        this.misteriosoService = misteriosoService;
+        this.ticketGanadorService = ticketGanadorService;
     }
 
     /**
@@ -45,6 +60,47 @@ public class TicketServiceImpl implements TicketService{
         return ticketMapper.toDto(ticket);
     }
 
+    
+    @Override
+    public RetornoTicketDTO nuevoTicket(TicketDTO ticketDTO) {
+    	
+    	log.debug("Request to new Ticket : {}", ticketDTO);
+        
+    	ticketDTO.setFecha(ZonedDateTime.now());
+    	ticketDTO.setParticipa_misterioso("");
+    	
+    	Ticket ticket = ticketMapper.toEntity(ticketDTO);
+        
+        //ticket = ticketRepository.save(ticket);
+        final RetornoTicketDTO retornaTicket = misteriosoService.verificaGanador(ticket);
+        ticket = ticketRepository.save(ticket);
+        
+        TicketGanadorDTO ganadorDTO = retornaTicket.getGanadorDTO();
+		if(ganadorDTO != null) {
+			ganadorDTO.setTicketId(ticket.getId());
+        	//TODO guardar ganador
+			ganadorDTO = ticketGanadorService.save(ganadorDTO);//TODO colocarlo en ticket
+        }
+        
+		/*final List<MisteriosoDTO> listaMisteriososActualizados = retornaTicket.getListaMisteriososActualizados();
+		
+		for (MisteriosoDTO misteriosoDTO : listaMisteriososActualizados) {
+			//TODO guardar misteriosos
+			misteriosoService.save(misteriosoDTO);
+			
+		}
+		*/
+        
+        log.debug("ticket con la nueva informacion : {}", ticket);
+        
+        retornaTicket.setTicketDTO(ticketMapper.toDto(ticket));
+        
+        log.debug("resultado del servicio {}",retornaTicket);
+        
+        return retornaTicket;
+    }
+    
+    
     /**
      *  Get all the tickets.
      *

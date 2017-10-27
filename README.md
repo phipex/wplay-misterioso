@@ -96,6 +96,8 @@ will generate few files:
 To optimize the wplay_misterioso application for production, run:
 
     ./mvnw -Pprod clean package
+    
+    ./mvnw -Pprod clean package -DskipTests
 
 This will concatenate and minify the client CSS and JavaScript files. It will also modify `index.html` so it references these new files.
 To ensure everything worked, run:

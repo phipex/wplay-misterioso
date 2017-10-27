@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 public class RetornoTicketDTO implements Serializable{
 
 	/**
@@ -55,13 +57,56 @@ public class RetornoTicketDTO implements Serializable{
 		return listaMisteriososActualizados;
 	}
 
-	public void setListaMisteriososActualizados(ArrayList<MisteriosoDTO> listaMisteriososActualizados) {
+	/*public void setListaMisteriososActualizados(ArrayList<MisteriosoDTO> listaMisteriososActualizados) {
 		this.listaMisteriososActualizados = listaMisteriososActualizados;
-	} 
+	}*/ 
 
 	public void setListaMisteriososActualizados(List<MisteriosoDTO> listaMisteriososActualizados) {
 		this.listaMisteriososActualizados = (ArrayList<MisteriosoDTO>) listaMisteriososActualizados;
-	} 
+	}
 
+	@Override
+	public String toString() {
+		return "RetornoTicketDTO [ticketDTO=" + ticketDTO + ", ganadorDTO=" + ganadorDTO
+				+ ", listaMisteriososActualizados=" + listaMisteriososActualizados + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((ganadorDTO == null) ? 0 : ganadorDTO.hashCode());
+		result = prime * result
+				+ ((listaMisteriososActualizados == null) ? 0 : listaMisteriososActualizados.hashCode());
+		result = prime * result + ((ticketDTO == null) ? 0 : ticketDTO.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RetornoTicketDTO other = (RetornoTicketDTO) obj;
+		if (ganadorDTO == null) {
+			if (other.ganadorDTO != null)
+				return false;
+		} else if (!ganadorDTO.equals(other.ganadorDTO))
+			return false;
+		if (listaMisteriososActualizados == null) {
+			if (other.listaMisteriososActualizados != null)
+				return false;
+		} else if (!listaMisteriososActualizados.equals(other.listaMisteriososActualizados))
+			return false;
+		if (ticketDTO == null) {
+			if (other.ticketDTO != null)
+				return false;
+		} else if (!ticketDTO.equals(other.ticketDTO))
+			return false;
+		return true;
+	} 
 	
 }

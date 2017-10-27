@@ -30,7 +30,14 @@
         },
         {
             "fieldName": "valor_ganado",
-            "fieldType": "BigDecimal"
+            "fieldType": "BigDecimal",
+            "fieldValidateRules": [
+                "min",
+                "max"
+            ],
+            "fieldValidateRulesMin": "0",
+
+            "fieldValidateRulesMax": "100000000"
         },
         {
             "fieldName": "fecha",
@@ -49,7 +56,7 @@
             "fieldType": "Integer"
         }
     ],
-    "changelogDate": "20171014202426",
+    "changelogDate": "20171023202426",
     "dto": "mapstruct",
     "service": "serviceImpl",
     "entityTableName": "ticket_ganador",

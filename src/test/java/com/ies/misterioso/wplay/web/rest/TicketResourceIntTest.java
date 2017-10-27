@@ -52,8 +52,8 @@ public class TicketResourceIntTest {
     private static final Integer DEFAULT_CANTIDAD_APUESTAS = 1;
     private static final Integer UPDATED_CANTIDAD_APUESTAS = 2;
 
-    private static final BigDecimal DEFAULT_VALOR_TOTAL = new BigDecimal(1);
-    private static final BigDecimal UPDATED_VALOR_TOTAL = new BigDecimal(2);
+    private static final BigDecimal DEFAULT_VALOR_TOTAL = new BigDecimal(100000000);
+    private static final BigDecimal UPDATED_VALOR_TOTAL = new BigDecimal(99999999);
 
     private static final ZonedDateTime DEFAULT_FECHA = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
     private static final ZonedDateTime UPDATED_FECHA = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);

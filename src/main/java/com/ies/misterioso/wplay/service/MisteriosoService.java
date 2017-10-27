@@ -1,7 +1,9 @@
 package com.ies.misterioso.wplay.service;
 
 import com.ies.misterioso.wplay.domain.Misterioso;
+import com.ies.misterioso.wplay.domain.Ticket;
 import com.ies.misterioso.wplay.service.dto.MisteriosoDTO;
+import com.ies.misterioso.wplay.service.dto.RetornoTicketDTO;
 
 import java.util.List;
 
@@ -43,7 +45,10 @@ public interface MisteriosoService {
      *  @param id the id of the entity
      */
     void delete(Long id);
-    
-    
-    List<Misterioso> findMisteriosoParticipa(int cantidadApuestas);
+
+	List<Misterioso> findMisteriosoParticipa(int cantidadApuestas);
+
+	List<MisteriosoDTO> getAllMisterioso();
+
+	RetornoTicketDTO verificaGanador(Ticket ticket);
 }

@@ -45,6 +45,9 @@ spring:
             enabled: false
     thymeleaf:
         mode: XHTML
+        
+    jmx:
+        default-domain: wplay_misterioso
 
 security:
     basic:

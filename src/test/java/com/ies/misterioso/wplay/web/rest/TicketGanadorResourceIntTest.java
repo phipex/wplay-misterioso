@@ -51,8 +51,8 @@ public class TicketGanadorResourceIntTest {
     private static final EstadoGanador DEFAULT_ESTADO = EstadoGanador.PENDIENTE;
     private static final EstadoGanador UPDATED_ESTADO = EstadoGanador.GANADO;
 
-    private static final BigDecimal DEFAULT_VALOR_GANADO = new BigDecimal(1);
-    private static final BigDecimal UPDATED_VALOR_GANADO = new BigDecimal(2);
+    private static final BigDecimal DEFAULT_VALOR_GANADO = new BigDecimal(0);
+    private static final BigDecimal UPDATED_VALOR_GANADO = new BigDecimal(1);
 
     private static final ZonedDateTime DEFAULT_FECHA = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
     private static final ZonedDateTime UPDATED_FECHA = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);

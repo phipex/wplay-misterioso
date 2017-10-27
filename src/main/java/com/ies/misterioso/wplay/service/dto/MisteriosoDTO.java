@@ -18,6 +18,7 @@ public class MisteriosoDTO implements Serializable {
     private String nombre;
 
     @DecimalMin(value = "0")
+    @DecimalMax(value = "100000000")
     private BigDecimal acumulado;
 
     @NotNull
@@ -31,6 +32,7 @@ public class MisteriosoDTO implements Serializable {
     private BigDecimal valor_base_min;
 
     @NotNull
+    @DecimalMax(value = "100000000")
     private BigDecimal valor_base_max;
 
     @NotNull

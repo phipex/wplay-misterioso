@@ -26,11 +26,15 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="wplayMisteriosoApp.misterioso.acumulado" for="field_acumulado">Acumulado</label>
             <input type="number" class="form-control" name="acumulado" id="field_acumulado"
-                [(ngModel)]="misterioso.acumulado" min="0" />
+                [(ngModel)]="misterioso.acumulado" min="0" max="100000000" />
             <div [hidden]="!(editForm.controls.acumulado?.dirty && editForm.controls.acumulado?.invalid)">
                 <small class="form-text text-danger"
                     [hidden]="!editForm.controls.acumulado?.errors?.min" jhiTranslate="entity.validation.min" translateValues="{ min: 0 }">
                     This field should be at least 0.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.acumulado?.errors?.max" jhiTranslate="entity.validation.max" translateValues="{ max: 100000000 }">
+                    This field cannot be more than 100000000.
                 </small>
                 <small class="form-text text-danger"
                     [hidden]="!editForm.controls.acumulado?.errors?.number" jhiTranslate="entity.validation.number">
@@ -90,11 +94,15 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="wplayMisteriosoApp.misterioso.valor_base_max" for="field_valor_base_max">Valor Base Max</label>
             <input type="number" class="form-control" name="valor_base_max" id="field_valor_base_max"
-                [(ngModel)]="misterioso.valor_base_max" required />
+                [(ngModel)]="misterioso.valor_base_max" required max="100000000" />
             <div [hidden]="!(editForm.controls.valor_base_max?.dirty && editForm.controls.valor_base_max?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.valor_base_max?.errors?.required" jhiTranslate="entity.validation.required">
                    This field is required.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.valor_base_max?.errors?.max" jhiTranslate="entity.validation.max" translateValues="{ max: 100000000 }">
+                    This field cannot be more than 100000000.
                 </small>
                 <small class="form-text text-danger"
                     [hidden]="!editForm.controls.valor_base_max?.errors?.number" jhiTranslate="entity.validation.number">

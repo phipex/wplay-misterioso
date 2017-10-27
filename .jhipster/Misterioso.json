@@ -13,9 +13,12 @@
             "fieldName": "acumulado",
             "fieldType": "BigDecimal",
             "fieldValidateRules": [
-                "min"
+                "min",
+                "max"
             ],
-            "fieldValidateRulesMin": "0"
+            "fieldValidateRulesMin": "0",
+
+            "fieldValidateRulesMax": "100000000"
         },
         {
             "fieldName": "cantidad_apuestas",
@@ -44,8 +47,10 @@
             "fieldName": "valor_base_max",
             "fieldType": "BigDecimal",
             "fieldValidateRules": [
-                "required"
-            ]
+                "required",
+                "max"
+            ],
+            "fieldValidateRulesMax": "100000000"
         },
         {
             "fieldName": "minimo_ticket",
@@ -96,7 +101,7 @@
             ]
         }
     ],
-    "changelogDate": "20171014194023",
+    "changelogDate": "20171023194023",
     "dto": "mapstruct",
     "service": "serviceImpl",
     "entityTableName": "misterioso",

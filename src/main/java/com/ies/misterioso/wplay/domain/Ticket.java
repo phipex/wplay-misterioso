@@ -34,6 +34,7 @@ public class Ticket implements Serializable {
     private Integer cantidad_apuestas;
 
     @NotNull
+    @DecimalMax(value = "100000000")
     @Column(name = "valor_total", precision=10, scale=2, nullable = false)
     private BigDecimal valor_total;
 

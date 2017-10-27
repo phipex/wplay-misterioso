@@ -46,7 +46,7 @@ public class MisteriosoRepositoryTest2 {
         
     }
 
-    @Test
+    /*@Test
     public void testFindByCantidadApuestasMax() {
     	String cantidadApuestas = "1";
     	
@@ -58,7 +58,7 @@ public class MisteriosoRepositoryTest2 {
     	
     	assertThat(cantidadRetornada).isEqualTo(cantidadEsperada);
     	
-    }
+    }*/
     
     
 }

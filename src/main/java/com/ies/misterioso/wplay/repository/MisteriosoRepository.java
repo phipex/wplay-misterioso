@@ -15,7 +15,7 @@ import org.springframework.data.jpa.repository.*;
 @Repository
 public interface MisteriosoRepository extends JpaRepository<Misterioso, Long> {
 
-	@Query("select m from Misterioso m where m.estado = 'ACTIVO' and ?1 between m.cantidad_apuestas_minima and m.cantidad_apuestas_maxima")
+	@Query("select m from Misterioso m where m.estado = 'ACTIVO' and ?1 between m.cantidad_apuestas_minima and m.cantidad_apuestas_maxima order by valor_base_max")
 	List<Misterioso> findByCantidadApuestasMax(Integer numeroApuestas);
 	
 }
