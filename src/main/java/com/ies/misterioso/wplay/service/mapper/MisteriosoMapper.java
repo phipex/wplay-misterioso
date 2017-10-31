@@ -9,9 +9,12 @@ import org.mapstruct.*;
  * Mapper for the entity Misterioso and its DTO MisteriosoDTO.
  */
 @Mapper(componentModel = "spring", uses = {})
-public interface MisteriosoMapper extends EntityMapper <MisteriosoDTO, Misterioso> {
+public interface MisteriosoMapper extends EntityMapper<MisteriosoDTO, Misterioso> {
+
     
+
     
+
     default Misterioso fromId(Long id) {
         if (id == null) {
             return null;

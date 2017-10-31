@@ -2,6 +2,7 @@ package com.ies.misterioso.wplay.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.ies.misterioso.wplay.service.TicketService;
+import com.ies.misterioso.wplay.web.rest.errors.BadRequestAlertException;
 import com.ies.misterioso.wplay.web.rest.util.HeaderUtil;
 import com.ies.misterioso.wplay.web.rest.util.PaginationUtil;
 import com.ies.misterioso.wplay.service.dto.RetornoTicketDTO;
@@ -53,7 +54,7 @@ public class TicketResource {
     public ResponseEntity<TicketDTO> createTicket(@Valid @RequestBody TicketDTO ticketDTO) throws URISyntaxException {
         log.debug("REST request to save Ticket : {}", ticketDTO);
         if (ticketDTO.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new ticket cannot already have an ID")).body(null);
+            throw new BadRequestAlertException("A new ticket cannot already have an ID", ENTITY_NAME, "idexists");
         }
         TicketDTO result = ticketService.save(ticketDTO);
         return ResponseEntity.created(new URI("/api/tickets/" + result.getId()))

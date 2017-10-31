@@ -55,7 +55,7 @@ public class TicketGanador implements Serializable {
     @JoinColumn(unique = true)
     private Ticket ticket;
 
-    
+
     
 
 	/**
@@ -83,6 +83,7 @@ public class TicketGanador implements Serializable {
 	}
 
 	// jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
+
     public Long getId() {
         return id;
     }
@@ -181,7 +182,7 @@ public class TicketGanador implements Serializable {
     public void setTicket(Ticket ticket) {
         this.ticket = ticket;
     }
-    // jhipster-needle-entity-add-getters-setters - Jhipster will add getters and setters here, do not remove
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
