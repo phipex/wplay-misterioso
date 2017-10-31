@@ -1,0 +1,25 @@
+{
+    "wplayMisteriosoApp": {
+        "ticket" : {
+            "home": {
+                "title": "Tickets",
+                "createLabel": "Crear nuevo Ticket",
+                "createOrEditLabel": "Crear o editar Ticket"
+            },
+            "created": "Un nuevo Ticket ha sido creado con el identificador {{ param }}",
+            "updated": "Un Ticket ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Ticket ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Ticket {{ id }}?"
+            },
+            "detail": {
+                "title": "Ticket"
+            },
+            "id_fuente": "Id Fuente",
+            "cantidad_apuestas": "Cantidad Apuestas",
+            "valor_total": "Valor Total",
+            "fecha": "Fecha",
+            "participa_misterioso": "Participa Misterioso"
+        }
+    }
+}

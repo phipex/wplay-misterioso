@@ -1,0 +1,27 @@
+{
+    "wplayMisteriosoApp": {
+        "ticketGanador" : {
+            "home": {
+                "title": "Ticket Ganadors",
+                "createLabel": "Crear nuevo Ticket Ganador",
+                "createOrEditLabel": "Crear o editar Ticket Ganador"
+            },
+            "created": "Un nuevo Ticket Ganador ha sido creado con el identificador {{ param }}",
+            "updated": "Un Ticket Ganador ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Ticket Ganador ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Ticket Ganador {{ id }}?"
+            },
+            "detail": {
+                "title": "Ticket Ganador"
+            },
+            "estado": "Estado",
+            "valor_ganado": "Valor Ganado",
+            "fecha": "Fecha",
+            "descripcion": "Descripcion",
+            "indice_ticket_misterioso": "Indice Ticket Misterioso",
+            "misterioso": "Misterioso",
+            "ticket": "Ticket"
+        }
+    }
+}

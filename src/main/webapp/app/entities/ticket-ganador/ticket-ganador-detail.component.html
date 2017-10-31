@@ -1,0 +1,53 @@
+
+<div *ngIf="ticketGanador">
+    <h2><span jhiTranslate="wplayMisteriosoApp.ticketGanador.detail.title">Ticket Ganador</span> {{ticketGanador.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="wplayMisteriosoApp.ticketGanador.estado">Estado</span></dt>
+        <dd>
+            <span jhiTranslate="{{'wplayMisteriosoApp.EstadoGanador.' + ticketGanador.estado}}">{{ticketGanador.estado}}</span>
+        </dd>
+        <dt><span jhiTranslate="wplayMisteriosoApp.ticketGanador.valor_ganado">Valor Ganado</span></dt>
+        <dd>
+            <span>{{ticketGanador.valor_ganado}}</span>
+        </dd>
+        <dt><span jhiTranslate="wplayMisteriosoApp.ticketGanador.fecha">Fecha</span></dt>
+        <dd>
+            <span>{{ticketGanador.fecha | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="wplayMisteriosoApp.ticketGanador.descripcion">Descripcion</span></dt>
+        <dd>
+            <span>{{ticketGanador.descripcion}}</span>
+        </dd>
+        <dt><span jhiTranslate="wplayMisteriosoApp.ticketGanador.indice_ticket_misterioso">Indice Ticket Misterioso</span></dt>
+        <dd>
+            <span>{{ticketGanador.indice_ticket_misterioso}}</span>
+        </dd>
+        <dt><span jhiTranslate="wplayMisteriosoApp.ticketGanador.misterioso">Misterioso</span></dt>
+        <dd>
+            <div *ngIf="ticketGanador.misteriosoId">
+                <a [routerLink]="['/misterioso', ticketGanador.misteriosoId]">{{ticketGanador.misteriosoId}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="wplayMisteriosoApp.ticketGanador.ticket">Ticket</span></dt>
+        <dd>
+            <div *ngIf="ticketGanador.ticketId">
+                <a [routerLink]="['/ticket', ticketGanador.ticketId]">{{ticketGanador.ticketId}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'ticket-ganador/'+ ticketGanador.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

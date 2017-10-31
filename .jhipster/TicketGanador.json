@@ -1,0 +1,65 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "misterioso",
+            "otherEntityName": "misterioso",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "ticket",
+            "otherEntityName": "ticket",
+            "relationshipType": "one-to-one",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "ticketGanador"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "estado",
+            "fieldType": "EstadoGanador",
+            "fieldValues": "PENDIENTE,GANADO",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "valor_ganado",
+            "fieldType": "BigDecimal",
+            "fieldValidateRules": [
+                "min",
+                "max"
+            ],
+            "fieldValidateRulesMin": "0",
+
+            "fieldValidateRulesMax": "100000000"
+        },
+        {
+            "fieldName": "fecha",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "descripcion",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": "1024"
+        },
+        {
+            "fieldName": "indice_ticket_misterioso",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20171023202426",
+    "dto": "mapstruct",
+    "service": "serviceImpl",
+    "entityTableName": "ticket_ganador",
+    "jpaMetamodelFiltering": false,
+    "pagination": "pagination"
+}

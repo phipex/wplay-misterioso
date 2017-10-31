@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity TicketGanador.
+    -->
+    <changeSet id="20171023202426-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="misterioso_id"
+                                 baseTableName="ticket_ganador"
+                                 constraintName="fk_ticket_ganador_misterioso_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="misterioso"/>
+
+        <addForeignKeyConstraint baseColumnNames="ticket_id"
+                                 baseTableName="ticket_ganador"
+                                 constraintName="fk_ticket_ganador_ticket_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="ticket"/>
+
+    </changeSet>
+</databaseChangeLog>

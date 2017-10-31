@@ -1,0 +1,88 @@
+<div>
+    <h2>
+        <span jhiTranslate="wplayMisteriosoApp.misterioso.home.title">Misteriosos</span>
+        <button class="btn btn-primary float-right jh-create-entity create-misterioso" [routerLink]="['/', { outlets: { popup: ['misterioso-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="wplayMisteriosoApp.misterioso.home.createLabel">
+            Create new Misterioso
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="misteriosos">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="nombre"><span jhiTranslate="wplayMisteriosoApp.misterioso.nombre">Nombre</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="acumulado"><span jhiTranslate="wplayMisteriosoApp.misterioso.acumulado">Acumulado</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="cantidad_apuestas"><span jhiTranslate="wplayMisteriosoApp.misterioso.cantidad_apuestas">Cantidad Apuestas</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="porcentaje_ticket"><span jhiTranslate="wplayMisteriosoApp.misterioso.porcentaje_ticket">Porcentaje Ticket</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="valor_base_min"><span jhiTranslate="wplayMisteriosoApp.misterioso.valor_base_min">Valor Base Min</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="valor_base_max"><span jhiTranslate="wplayMisteriosoApp.misterioso.valor_base_max">Valor Base Max</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="minimo_ticket"><span jhiTranslate="wplayMisteriosoApp.misterioso.minimo_ticket">Minimo Ticket</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="maximo_ticket"><span jhiTranslate="wplayMisteriosoApp.misterioso.maximo_ticket">Maximo Ticket</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="ganador"><span jhiTranslate="wplayMisteriosoApp.misterioso.ganador">Ganador</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="estado"><span jhiTranslate="wplayMisteriosoApp.misterioso.estado">Estado</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="descripcion"><span jhiTranslate="wplayMisteriosoApp.misterioso.descripcion">Descripcion</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="cantidad_apuestas_minima"><span jhiTranslate="wplayMisteriosoApp.misterioso.cantidad_apuestas_minima">Cantidad Apuestas Minima</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="cantidad_apuestas_maxima"><span jhiTranslate="wplayMisteriosoApp.misterioso.cantidad_apuestas_maxima">Cantidad Apuestas Maxima</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let misterioso of misteriosos ;trackBy: trackId">
+                <td><a [routerLink]="['../misterioso', misterioso.id ]">{{misterioso.id}}</a></td>
+                <td>{{misterioso.nombre}}</td>
+                <td>{{misterioso.acumulado}}</td>
+                <td>{{misterioso.cantidad_apuestas}}</td>
+                <td>{{misterioso.porcentaje_ticket}}</td>
+                <td>{{misterioso.valor_base_min}}</td>
+                <td>{{misterioso.valor_base_max}}</td>
+                <td>{{misterioso.minimo_ticket}}</td>
+                <td>{{misterioso.maximo_ticket}}</td>
+                <td>{{misterioso.ganador}}</td>
+                <td jhiTranslate="{{'wplayMisteriosoApp.EstadoMisterioso.' + misterioso.estado}}">{{misterioso.estado}}</td>
+                <td>{{misterioso.descripcion}}</td>
+                <td>{{misterioso.cantidad_apuestas_minima}}</td>
+                <td>{{misterioso.cantidad_apuestas_maxima}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../misterioso', misterioso.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'misterioso/'+ misterioso.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'misterioso/'+ misterioso.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+        <div *ngIf="misteriosos && misteriosos.length">
+            <div class="row justify-content-center">
+                <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+            </div>
+            <div class="row justify-content-center">
+                <ngb-pagination [collectionSize]="totalItems" [(page)]="page" (pageChange)="loadPage(page)"></ngb-pagination>
+            </div>
+        </div>
+</div>

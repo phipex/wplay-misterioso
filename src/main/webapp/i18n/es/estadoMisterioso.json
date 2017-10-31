@@ -1,0 +1,9 @@
+{
+    "wplayMisteriosoApp": {
+        "EstadoMisterioso" : {
+            "null": "",
+            "ACTIVO": "ACTIVO",
+            "INACTIVO": "INACTIVO"
+        }
+    }
+}

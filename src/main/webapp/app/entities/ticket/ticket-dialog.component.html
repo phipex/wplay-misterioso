@@ -1,0 +1,98 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myTicketLabel" jhiTranslate="wplayMisteriosoApp.ticket.home.createOrEditLabel">Create or edit a Ticket</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!ticket.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="ticket.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="wplayMisteriosoApp.ticket.id_fuente" for="field_id_fuente">Id Fuente</label>
+            <input type="text" class="form-control" name="id_fuente" id="field_id_fuente"
+                [(ngModel)]="ticket.id_fuente" required />
+            <div [hidden]="!(editForm.controls.id_fuente?.dirty && editForm.controls.id_fuente?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.id_fuente?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="wplayMisteriosoApp.ticket.cantidad_apuestas" for="field_cantidad_apuestas">Cantidad Apuestas</label>
+            <input type="number" class="form-control" name="cantidad_apuestas" id="field_cantidad_apuestas"
+                [(ngModel)]="ticket.cantidad_apuestas" required />
+            <div [hidden]="!(editForm.controls.cantidad_apuestas?.dirty && editForm.controls.cantidad_apuestas?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.cantidad_apuestas?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.cantidad_apuestas?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="wplayMisteriosoApp.ticket.valor_total" for="field_valor_total">Valor Total</label>
+            <input type="number" class="form-control" name="valor_total" id="field_valor_total"
+                [(ngModel)]="ticket.valor_total" required max="100000000" />
+            <div [hidden]="!(editForm.controls.valor_total?.dirty && editForm.controls.valor_total?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.valor_total?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.valor_total?.errors?.max" jhiTranslate="entity.validation.max" translateValues="{ max: 100000000 }">
+                    This field cannot be more than 100000000.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.valor_total?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="wplayMisteriosoApp.ticket.fecha" for="field_fecha">Fecha</label>
+            <div class="d-flex">
+                <input id="field_fecha" type="datetime-local" class="form-control" name="fecha" [(ngModel)]="ticket.fecha"
+                required  />
+            </div>
+            <div [hidden]="!(editForm.controls.fecha?.dirty && editForm.controls.fecha?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.fecha?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.fecha?.errors?.ZonedDateTimelocal" jhiTranslate="entity.validation.ZonedDateTimelocal">
+                    This field should be a date and time.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="wplayMisteriosoApp.ticket.participa_misterioso" for="field_participa_misterioso">Participa Misterioso</label>
+            <input type="text" class="form-control" name="participa_misterioso" id="field_participa_misterioso"
+                [(ngModel)]="ticket.participa_misterioso" required />
+            <div [hidden]="!(editForm.controls.participa_misterioso?.dirty && editForm.controls.participa_misterioso?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.participa_misterioso?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

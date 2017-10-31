@@ -1,0 +1,73 @@
+
+<div *ngIf="misterioso">
+    <h2><span jhiTranslate="wplayMisteriosoApp.misterioso.detail.title">Misterioso</span> {{misterioso.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="wplayMisteriosoApp.misterioso.nombre">Nombre</span></dt>
+        <dd>
+            <span>{{misterioso.nombre}}</span>
+        </dd>
+        <dt><span jhiTranslate="wplayMisteriosoApp.misterioso.acumulado">Acumulado</span></dt>
+        <dd>
+            <span>{{misterioso.acumulado}}</span>
+        </dd>
+        <dt><span jhiTranslate="wplayMisteriosoApp.misterioso.cantidad_apuestas">Cantidad Apuestas</span></dt>
+        <dd>
+            <span>{{misterioso.cantidad_apuestas}}</span>
+        </dd>
+        <dt><span jhiTranslate="wplayMisteriosoApp.misterioso.porcentaje_ticket">Porcentaje Ticket</span></dt>
+        <dd>
+            <span>{{misterioso.porcentaje_ticket}}</span>
+        </dd>
+        <dt><span jhiTranslate="wplayMisteriosoApp.misterioso.valor_base_min">Valor Base Min</span></dt>
+        <dd>
+            <span>{{misterioso.valor_base_min}}</span>
+        </dd>
+        <dt><span jhiTranslate="wplayMisteriosoApp.misterioso.valor_base_max">Valor Base Max</span></dt>
+        <dd>
+            <span>{{misterioso.valor_base_max}}</span>
+        </dd>
+        <dt><span jhiTranslate="wplayMisteriosoApp.misterioso.minimo_ticket">Minimo Ticket</span></dt>
+        <dd>
+            <span>{{misterioso.minimo_ticket}}</span>
+        </dd>
+        <dt><span jhiTranslate="wplayMisteriosoApp.misterioso.maximo_ticket">Maximo Ticket</span></dt>
+        <dd>
+            <span>{{misterioso.maximo_ticket}}</span>
+        </dd>
+        <dt><span jhiTranslate="wplayMisteriosoApp.misterioso.ganador">Ganador</span></dt>
+        <dd>
+            <span>{{misterioso.ganador}}</span>
+        </dd>
+        <dt><span jhiTranslate="wplayMisteriosoApp.misterioso.estado">Estado</span></dt>
+        <dd>
+            <span jhiTranslate="{{'wplayMisteriosoApp.EstadoMisterioso.' + misterioso.estado}}">{{misterioso.estado}}</span>
+        </dd>
+        <dt><span jhiTranslate="wplayMisteriosoApp.misterioso.descripcion">Descripcion</span></dt>
+        <dd>
+            <span>{{misterioso.descripcion}}</span>
+        </dd>
+        <dt><span jhiTranslate="wplayMisteriosoApp.misterioso.cantidad_apuestas_minima">Cantidad Apuestas Minima</span></dt>
+        <dd>
+            <span>{{misterioso.cantidad_apuestas_minima}}</span>
+        </dd>
+        <dt><span jhiTranslate="wplayMisteriosoApp.misterioso.cantidad_apuestas_maxima">Cantidad Apuestas Maxima</span></dt>
+        <dd>
+            <span>{{misterioso.cantidad_apuestas_maxima}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'misterioso/'+ misterioso.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>
