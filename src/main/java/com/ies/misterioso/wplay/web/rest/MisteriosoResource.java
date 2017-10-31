@@ -2,6 +2,7 @@ package com.ies.misterioso.wplay.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.ies.misterioso.wplay.service.MisteriosoService;
+import com.ies.misterioso.wplay.web.rest.errors.BadRequestAlertException;
 import com.ies.misterioso.wplay.web.rest.util.HeaderUtil;
 import com.ies.misterioso.wplay.web.rest.util.PaginationUtil;
 import com.ies.misterioso.wplay.service.dto.MisteriosoDTO;
@@ -52,7 +53,7 @@ public class MisteriosoResource {
     public ResponseEntity<MisteriosoDTO> createMisterioso(@Valid @RequestBody MisteriosoDTO misteriosoDTO) throws URISyntaxException {
         log.debug("REST request to save Misterioso : {}", misteriosoDTO);
         if (misteriosoDTO.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new misterioso cannot already have an ID")).body(null);
+            throw new BadRequestAlertException("A new misterioso cannot already have an ID", ENTITY_NAME, "idexists");
         }
         MisteriosoDTO result = misteriosoService.save(misteriosoDTO);
         return ResponseEntity.created(new URI("/api/misteriosos/" + result.getId()))

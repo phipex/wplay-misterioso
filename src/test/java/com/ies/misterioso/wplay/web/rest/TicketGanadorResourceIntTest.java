@@ -33,6 +33,7 @@ import java.time.ZoneId;
 import java.util.List;
 
 import static com.ies.misterioso.wplay.web.rest.TestUtil.sameInstant;
+import static com.ies.misterioso.wplay.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -95,6 +96,7 @@ public class TicketGanadorResourceIntTest {
         this.restTicketGanadorMockMvc = MockMvcBuilders.standaloneSetup(ticketGanadorResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
+            .setConversionService(createFormattingConversionService())
             .setMessageConverters(jacksonMessageConverter).build();
     }
 

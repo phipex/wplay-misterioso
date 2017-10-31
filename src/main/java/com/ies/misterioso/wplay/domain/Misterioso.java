@@ -81,7 +81,7 @@ public class Misterioso implements Serializable {
     @Column(name = "cantidad_apuestas_maxima", nullable = false)
     private Integer cantidad_apuestas_maxima;
 
-    // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -258,7 +258,7 @@ public class Misterioso implements Serializable {
     public void setCantidad_apuestas_maxima(Integer cantidad_apuestas_maxima) {
         this.cantidad_apuestas_maxima = cantidad_apuestas_maxima;
     }
-    // jhipster-needle-entity-add-getters-setters - Jhipster will add getters and setters here, do not remove
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
