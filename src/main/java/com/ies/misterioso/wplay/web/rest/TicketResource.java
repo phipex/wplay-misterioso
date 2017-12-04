@@ -1,6 +1,7 @@
 package com.ies.misterioso.wplay.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.ies.misterioso.wplay.security.AuthoritiesConstants;
 import com.ies.misterioso.wplay.service.TicketService;
 import com.ies.misterioso.wplay.web.rest.errors.BadRequestAlertException;
 import com.ies.misterioso.wplay.web.rest.util.HeaderUtil;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -71,6 +73,7 @@ public class TicketResource {
      */
     @PostMapping("/analizaticket")
     @Timed
+    @Secured(AuthoritiesConstants.USER)
     public ResponseEntity<RetornoTicketDTO> analizaTicket(@Valid @RequestBody TicketDTO ticketDTO) throws URISyntaxException {
 	    log.debug("REST request to save Ticket : {}", ticketDTO);
 	    if (ticketDTO.getId() != null) {

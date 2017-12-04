@@ -17,7 +17,7 @@ public class RetornoTicketDTO implements Serializable{
 	
 	TicketGanadorDTO ganadorDTO;
 	
-	ArrayList<MisteriosoDTO> listaMisteriososActualizados;
+	ArrayList<MisteriosoTicketDTO> listaMisteriososActualizados;
 
 	/**
 	 * @param ticketDTO
@@ -25,10 +25,10 @@ public class RetornoTicketDTO implements Serializable{
 	 * @param listaMisteriososActualizados
 	 */
 	public RetornoTicketDTO(TicketDTO ticketDTO, TicketGanadorDTO ganadorDTO,
-			List<MisteriosoDTO> listaMisteriososActualizados) {
+			List<MisteriosoTicketDTO> listaMisteriososActualizados) {
 		this.ticketDTO = ticketDTO;
 		this.ganadorDTO = ganadorDTO;
-		this.listaMisteriososActualizados = (ArrayList<MisteriosoDTO>) listaMisteriososActualizados;
+		this.listaMisteriososActualizados = (ArrayList<MisteriosoTicketDTO>) listaMisteriososActualizados;
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class RetornoTicketDTO implements Serializable{
 		this.ganadorDTO = ganadorDTO;
 	}
 
-	public List<MisteriosoDTO> getListaMisteriososActualizados() {
+	public List<MisteriosoTicketDTO> getListaMisteriososActualizados() {
 		return listaMisteriososActualizados;
 	}
 
@@ -61,8 +61,8 @@ public class RetornoTicketDTO implements Serializable{
 		this.listaMisteriososActualizados = listaMisteriososActualizados;
 	}*/ 
 
-	public void setListaMisteriososActualizados(List<MisteriosoDTO> listaMisteriososActualizados) {
-		this.listaMisteriososActualizados = (ArrayList<MisteriosoDTO>) listaMisteriososActualizados;
+	public void setListaMisteriososActualizados(List<MisteriosoTicketDTO> listaMisteriososActualizados) {
+		this.listaMisteriososActualizados = (ArrayList<MisteriosoTicketDTO>) listaMisteriososActualizados;
 	}
 
 	@Override

@@ -8,11 +8,11 @@ import com.ies.misterioso.wplay.domain.Ticket;
 import com.ies.misterioso.wplay.domain.enumeration.EstadoGanador;
 import com.ies.misterioso.wplay.repository.MisteriosoRepository;
 import com.ies.misterioso.wplay.service.dto.MisteriosoDTO;
+import com.ies.misterioso.wplay.service.dto.MisteriosoTicketDTO;
 import com.ies.misterioso.wplay.service.dto.RetornoTicketDTO;
 import com.ies.misterioso.wplay.service.dto.TicketGanadorDTO;
 import com.ies.misterioso.wplay.service.mapper.MisteriosoMapper;
-
-
+import com.ies.misterioso.wplay.service.mapper.MisteriosoTicketMapper;
 
 import java.math.BigDecimal;
 import java.security.SecureRandom;
@@ -48,19 +48,21 @@ public class MisteriosoServiceImpl implements MisteriosoService{
     private final MisteriosoRepository misteriosoRepository;
 
     private final MisteriosoMapper misteriosoMapper;
+    
+    private final MisteriosoTicketMapper misteriosoTicketMapper;
 
     /**
-     * contiene los ganadores para cada misterioso
+     * contiene los ganadores para cada misterioso <idMisterioso, Ganador>
      */
     private static volatile ConcurrentMap<Long, AtomicLong> ganadores;
     
     /**
-     * contiene el ultimo ganador 
+     * contiene el ultimo ganador <idMisterioso, Ganador>
      */
 	private static volatile ConcurrentMap<Long, AtomicLong> ultimosGanadores;
     
 	/**
-	 * indice de los tickets para cada misterioso
+	 * indice de los tickets para cada misterioso <idMisterioso, ContadorTickect>
 	 */
     private static volatile ConcurrentMap<Long, LongAdder> indexTicketByMisterioso;
     
@@ -89,9 +91,10 @@ public class MisteriosoServiceImpl implements MisteriosoService{
 		return indexTicketByMisterioso;
 	}
 
-	public MisteriosoServiceImpl(MisteriosoRepository misteriosoRepository, MisteriosoMapper misteriosoMapper) {
+	public MisteriosoServiceImpl(MisteriosoRepository misteriosoRepository, MisteriosoMapper misteriosoMapper, MisteriosoTicketMapper misteriosoTicketMapper) {
         this.misteriosoRepository = misteriosoRepository;
         this.misteriosoMapper = misteriosoMapper;
+        this.misteriosoTicketMapper = misteriosoTicketMapper;
         
     }
 
@@ -103,11 +106,18 @@ public class MisteriosoServiceImpl implements MisteriosoService{
      */
     @Override
     public synchronized MisteriosoDTO save(MisteriosoDTO misteriosoDTO) {
-        log.debug("Request to save Misterioso : {}", misteriosoDTO);
+        
+    	//TODO actualizar el mapa
+    	
+    	return saveRepository(misteriosoDTO);
+    }
+
+	private MisteriosoDTO saveRepository(MisteriosoDTO misteriosoDTO) {
+		log.debug("Request to save Misterioso : {}", misteriosoDTO);
         Misterioso misterioso = misteriosoMapper.toEntity(misteriosoDTO);
         misterioso = misteriosoRepository.save(misterioso);
         return misteriosoMapper.toDto(misterioso);
-    }
+	}
 
     /**
      *  Get all the misteriosos.
@@ -381,15 +391,7 @@ public class MisteriosoServiceImpl implements MisteriosoService{
     	
     	//crear nuevo ganador aleatorio
     	
-    	final int cantidadApuestasMaxima = misterioso.getMaximo_ticket();
-    	final int cantidadApuestasMinima = misterioso.getMinimo_ticket();
-    	final int rangoApuestas = cantidadApuestasMaxima - cantidadApuestasMinima;
-    	
-    	SecureRandom secure = new SecureRandom();
-    	
-    	final long nextInt = (long)secure.nextInt(rangoApuestas);
-    	
-    	final long nuevoGanador = nextInt + (long)cantidadApuestasMinima;
+    	final long nuevoGanador = nuevoGanador(misterioso);
     	
     	//AtomicLong atomicNuevoGanador = new AtomicLong(nuevoGanador);
     	
@@ -420,6 +422,23 @@ public class MisteriosoServiceImpl implements MisteriosoService{
     	log.debug("reiniciaMisterioso::reiniciando misterioso {}",misterioso);
     	
     }
+
+	/**
+	 * @param misterioso
+	 * @return
+	 */
+	private long nuevoGanador(Misterioso misterioso) {
+		final int cantidadApuestasMaxima = misterioso.getMaximo_ticket();
+    	final int cantidadApuestasMinima = misterioso.getMinimo_ticket();
+    	final int rangoApuestas = cantidadApuestasMaxima - cantidadApuestasMinima;
+    	
+    	SecureRandom secure = new SecureRandom();
+    	
+    	final long nextInt = (long)secure.nextInt(rangoApuestas);
+    	
+    	final long nuevoGanador = nextInt + (long)cantidadApuestasMinima;
+		return nuevoGanador;
+	}
     
     
     
@@ -531,12 +550,12 @@ public class MisteriosoServiceImpl implements MisteriosoService{
      * @param misteriosos
      * @return
      */
-    private synchronized List<MisteriosoDTO> listEntityToListDTO(List<Misterioso> misteriosos){
+    private synchronized List<MisteriosoTicketDTO> listEntityToListDTO(List<Misterioso> misteriosos){
     	
-    	List<MisteriosoDTO> misteriososDtos = new ArrayList<>();
+    	List<MisteriosoTicketDTO> misteriososDtos = new ArrayList<>();
     	
     	for (Misterioso misterioso : misteriosos) {
-    		final MisteriosoDTO misteriosoDto = misteriosoMapper.toDto(misterioso);
+    		final MisteriosoTicketDTO misteriosoDto = misteriosoTicketMapper.toDto(misterioso);
     		misteriososDtos.add(misteriosoDto);
 		}
     	
