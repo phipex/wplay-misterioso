@@ -103,7 +103,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             //.antMatchers("/api/account/reset-password/finish").permitAll()
             .antMatchers("/api/profile-info").permitAll()
             .antMatchers("/api/**").authenticated()
-            //.antMatchers("/api/**").permitAll()
             .antMatchers("/websocket/tracker").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/websocket/**").permitAll()
             .antMatchers("/management/health").permitAll()

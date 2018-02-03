@@ -1,6 +1,7 @@
 package com.ies.misterioso.wplay.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.ies.misterioso.wplay.security.AuthoritiesConstants;
 import com.ies.misterioso.wplay.service.MisteriosoService;
 import com.ies.misterioso.wplay.web.rest.errors.BadRequestAlertException;
 import com.ies.misterioso.wplay.web.rest.util.HeaderUtil;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -50,6 +52,7 @@ public class MisteriosoResource {
      */
     @PostMapping("/misteriosos")
     @Timed
+    @Secured({AuthoritiesConstants.COMERCIAL,AuthoritiesConstants.ADMIN})
     public ResponseEntity<MisteriosoDTO> createMisterioso(@Valid @RequestBody MisteriosoDTO misteriosoDTO) throws URISyntaxException {
         log.debug("REST request to save Misterioso : {}", misteriosoDTO);
         if (misteriosoDTO.getId() != null) {
@@ -72,6 +75,7 @@ public class MisteriosoResource {
      */
     @PutMapping("/misteriosos")
     @Timed
+    @Secured({AuthoritiesConstants.COMERCIAL,AuthoritiesConstants.ADMIN})
     public ResponseEntity<MisteriosoDTO> updateMisterioso(@Valid @RequestBody MisteriosoDTO misteriosoDTO) throws URISyntaxException {
         log.debug("REST request to update Misterioso : {}", misteriosoDTO);
         if (misteriosoDTO.getId() == null) {
@@ -120,6 +124,7 @@ public class MisteriosoResource {
      */
     @DeleteMapping("/misteriosos/{id}")
     @Timed
+    @Secured({AuthoritiesConstants.COMERCIAL,AuthoritiesConstants.ADMIN})
     public ResponseEntity<Void> deleteMisterioso(@PathVariable Long id) {
         log.debug("REST request to delete Misterioso : {}", id);
         misteriosoService.delete(id);
