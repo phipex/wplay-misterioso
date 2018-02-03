@@ -33,7 +33,7 @@ export const ticketGanadorRoute: Routes = [
             'pagingParams': TicketGanadorResolvePagingParams
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER','ROLE_COMERCIAL'],
             pageTitle: 'wplayMisteriosoApp.ticketGanador.home.title'
         },
         canActivate: [UserRouteAccessService]
@@ -41,7 +41,7 @@ export const ticketGanadorRoute: Routes = [
         path: 'ticket-ganador/:id',
         component: TicketGanadorDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER','ROLE_COMERCIAL'],
             pageTitle: 'wplayMisteriosoApp.ticketGanador.home.title'
         },
         canActivate: [UserRouteAccessService]

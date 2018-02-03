@@ -50,7 +50,7 @@ public class TicketResource {
      * @param ticketDTO the ticketDTO to create
      * @return the ResponseEntity with status 201 (Created) and with body the new ticketDTO, or with status 400 (Bad Request) if the ticket has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
+     *//*
     @PostMapping("/tickets")
     @Timed
     public ResponseEntity<TicketDTO> createTicket(@Valid @RequestBody TicketDTO ticketDTO) throws URISyntaxException {
@@ -63,10 +63,10 @@ public class TicketResource {
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
-
+*/
     /**
      * POST  /tickets :analiza si el ticket es un ganador
-     * 
+     *
      * @param ticketDTO the ticketDTO to create
      * @return the ResponseEntity with status 201 (Created) and with body the new ticketDTO, or with status 400 (Bad Request) if the ticket has already an ID
      * @throws URISyntaxException  if the Location URI syntax is incorrect
@@ -81,16 +81,16 @@ public class TicketResource {
 	    }
 	    RetornoTicketDTO result = ticketService.nuevoTicket(ticketDTO);
 	    final Long idNewTicket = result.getTicketDTO().getId();
-	    
+
 	    return ResponseEntity.created(new URI("/api/tickets/" + idNewTicket))
 	        .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, idNewTicket.toString()))
 	        .body(result);
-    	
+
     }
-    
-    
-    
-    /**
+
+
+    /*
+    *//**
      * PUT  /tickets : Updates an existing ticket.
      *
      * @param ticketDTO the ticketDTO to update
@@ -98,7 +98,7 @@ public class TicketResource {
      * or with status 400 (Bad Request) if the ticketDTO is not valid,
      * or with status 500 (Internal Server Error) if the ticketDTO couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
+     *//*
     @PutMapping("/tickets")
     @Timed
     public ResponseEntity<TicketDTO> updateTicket(@Valid @RequestBody TicketDTO ticketDTO) throws URISyntaxException {
@@ -110,7 +110,7 @@ public class TicketResource {
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, ticketDTO.getId().toString()))
             .body(result);
-    }
+    }*/
 
     /**
      * GET  /tickets : get all the tickets.
@@ -141,17 +141,17 @@ public class TicketResource {
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(ticketDTO));
     }
 
-    /**
+   /* *//**
      * DELETE  /tickets/:id : delete the "id" ticket.
      *
      * @param id the id of the ticketDTO to delete
      * @return the ResponseEntity with status 200 (OK)
-     */
+     *//*
     @DeleteMapping("/tickets/{id}")
     @Timed
     public ResponseEntity<Void> deleteTicket(@PathVariable Long id) {
         log.debug("REST request to delete Ticket : {}", id);
         ticketService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
-    }
+    }*/
 }

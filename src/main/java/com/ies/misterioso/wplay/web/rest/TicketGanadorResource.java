@@ -41,13 +41,13 @@ public class TicketGanadorResource {
         this.ticketGanadorService = ticketGanadorService;
     }
 
-    /**
+   /* *//**
      * POST  /ticket-ganadors : Create a new ticketGanador.
      *
      * @param ticketGanadorDTO the ticketGanadorDTO to create
      * @return the ResponseEntity with status 201 (Created) and with body the new ticketGanadorDTO, or with status 400 (Bad Request) if the ticketGanador has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
+     *//*
     @PostMapping("/ticket-ganadors")
     @Timed
     public ResponseEntity<TicketGanadorDTO> createTicketGanador(@Valid @RequestBody TicketGanadorDTO ticketGanadorDTO) throws URISyntaxException {
@@ -61,7 +61,7 @@ public class TicketGanadorResource {
             .body(result);
     }
 
-    /**
+    *//**
      * PUT  /ticket-ganadors : Updates an existing ticketGanador.
      *
      * @param ticketGanadorDTO the ticketGanadorDTO to update
@@ -69,7 +69,7 @@ public class TicketGanadorResource {
      * or with status 400 (Bad Request) if the ticketGanadorDTO is not valid,
      * or with status 500 (Internal Server Error) if the ticketGanadorDTO couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
+     *//*
     @PutMapping("/ticket-ganadors")
     @Timed
     public ResponseEntity<TicketGanadorDTO> updateTicketGanador(@Valid @RequestBody TicketGanadorDTO ticketGanadorDTO) throws URISyntaxException {
@@ -81,7 +81,7 @@ public class TicketGanadorResource {
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, ticketGanadorDTO.getId().toString()))
             .body(result);
-    }
+    }*/
 
     /**
      * GET  /ticket-ganadors : get all the ticketGanadors.
@@ -112,17 +112,17 @@ public class TicketGanadorResource {
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(ticketGanadorDTO));
     }
 
-    /**
+   /* *//**
      * DELETE  /ticket-ganadors/:id : delete the "id" ticketGanador.
      *
      * @param id the id of the ticketGanadorDTO to delete
      * @return the ResponseEntity with status 200 (OK)
-     */
+     *//*
     @DeleteMapping("/ticket-ganadors/{id}")
     @Timed
     public ResponseEntity<Void> deleteTicketGanador(@PathVariable Long id) {
         log.debug("REST request to delete TicketGanador : {}", id);
         ticketGanadorService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
-    }
+    }*/
 }

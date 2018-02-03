@@ -33,7 +33,7 @@ export const misteriosoRoute: Routes = [
             'pagingParams': MisteriosoResolvePagingParams
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER','ROLE_COMERCIAL'],
             pageTitle: 'wplayMisteriosoApp.misterioso.home.title'
         },
         canActivate: [UserRouteAccessService]
@@ -41,7 +41,7 @@ export const misteriosoRoute: Routes = [
         path: 'misterioso/:id',
         component: MisteriosoDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER','ROLE_COMERCIAL'],
             pageTitle: 'wplayMisteriosoApp.misterioso.home.title'
         },
         canActivate: [UserRouteAccessService]
@@ -53,7 +53,7 @@ export const misteriosoPopupRoute: Routes = [
         path: 'misterioso-new',
         component: MisteriosoPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER','ROLE_COMERCIAL'],
             pageTitle: 'wplayMisteriosoApp.misterioso.home.title'
         },
         canActivate: [UserRouteAccessService],
@@ -63,7 +63,7 @@ export const misteriosoPopupRoute: Routes = [
         path: 'misterioso/:id/edit',
         component: MisteriosoPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER','ROLE_COMERCIAL'],
             pageTitle: 'wplayMisteriosoApp.misterioso.home.title'
         },
         canActivate: [UserRouteAccessService],
@@ -73,7 +73,7 @@ export const misteriosoPopupRoute: Routes = [
         path: 'misterioso/:id/delete',
         component: MisteriosoDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER','ROLE_COMERCIAL'],
             pageTitle: 'wplayMisteriosoApp.misterioso.home.title'
         },
         canActivate: [UserRouteAccessService],
