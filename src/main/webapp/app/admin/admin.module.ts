@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { JhiTrackerService } from './../shared/tracker/tracker.service';
 
 import { WplayMisteriosoSharedModule } from '../shared';
+import { EntityAuditModule } from './entity-audit/entity-audit.module';
 /* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
 
 import {
@@ -36,6 +37,7 @@ import {
     imports: [
         WplayMisteriosoSharedModule,
         RouterModule.forRoot(adminState, { useHash: true }),
+        EntityAuditModule,
         /* jhipster-needle-add-admin-module - JHipster will add admin modules here */
     ],
     declarations: [

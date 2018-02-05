@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 import com.ies.misterioso.wplay.domain.enumeration.EstadoMisterioso;
+import org.javers.core.metamodel.annotation.DiffIgnore;
 
 /**
  * A Misterioso.
@@ -30,11 +31,13 @@ public class Misterioso implements Serializable {
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
+    @DiffIgnore
     @DecimalMin(value = "0")
     @DecimalMax(value = "100000000")
     @Column(name = "acumulado", precision=10, scale=2)
     private BigDecimal acumulado;
 
+    @DiffIgnore
     @NotNull
     @Min(value = 0)
     @Column(name = "cantidad_apuestas", nullable = false)
@@ -61,6 +64,7 @@ public class Misterioso implements Serializable {
     @Column(name = "maximo_ticket", nullable = false)
     private Integer maximo_ticket;
 
+    @DiffIgnore
     @Column(name = "ganador")
     private String ganador;
 

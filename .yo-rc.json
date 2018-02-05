@@ -35,5 +35,8 @@
       "es"
     ],
     "herokuAppName": "wplay-misterioso"
+  },
+  "generator-jhipster-entity-audit": {
+    "auditFramework": "javers"
   }
 }
