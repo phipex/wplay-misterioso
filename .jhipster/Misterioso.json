@@ -17,7 +17,6 @@
                 "max"
             ],
             "fieldValidateRulesMin": "0",
-
             "fieldValidateRulesMax": "100000000"
         },
         {
@@ -106,5 +105,6 @@
     "service": "serviceImpl",
     "entityTableName": "misterioso",
     "jpaMetamodelFiltering": false,
-    "pagination": "pagination"
+    "pagination": "pagination",
+    "enableEntityAudit": true
 }
