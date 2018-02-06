@@ -44,6 +44,8 @@ public class Misterioso implements Serializable {
     private Integer cantidad_apuestas;
 
     @NotNull
+    @DecimalMin("0.00")
+    @DecimalMax("2.20")
     @Column(name = "porcentaje_ticket", nullable = false)
     private Float porcentaje_ticket;
 
