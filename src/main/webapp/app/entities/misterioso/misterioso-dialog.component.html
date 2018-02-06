@@ -26,7 +26,7 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="wplayMisteriosoApp.misterioso.acumulado" for="field_acumulado">Acumulado</label>
             <input type="number" class="form-control" name="acumulado" id="field_acumulado"
-                [(ngModel)]="misterioso.acumulado" min="0" max="100000000" />
+                [(ngModel)]="misterioso.acumulado" min="0" max="100000000" disabled/>
             <div [hidden]="!(editForm.controls.acumulado?.dirty && editForm.controls.acumulado?.invalid)">
                 <small class="form-text text-danger"
                     [hidden]="!editForm.controls.acumulado?.errors?.min" jhiTranslate="entity.validation.min" translateValues="{ min: 0 }">
@@ -45,7 +45,7 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="wplayMisteriosoApp.misterioso.cantidad_apuestas" for="field_cantidad_apuestas">Cantidad Apuestas</label>
             <input type="number" class="form-control" name="cantidad_apuestas" id="field_cantidad_apuestas"
-                [(ngModel)]="misterioso.cantidad_apuestas" required min="0" />
+                [(ngModel)]="misterioso.cantidad_apuestas" required min="0" disabled/>
             <div [hidden]="!(editForm.controls.cantidad_apuestas?.dirty && editForm.controls.cantidad_apuestas?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.cantidad_apuestas?.errors?.required" jhiTranslate="entity.validation.required">
@@ -64,7 +64,7 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="wplayMisteriosoApp.misterioso.porcentaje_ticket" for="field_porcentaje_ticket">Porcentaje Ticket</label>
             <input type="number" class="form-control" name="porcentaje_ticket" id="field_porcentaje_ticket"
-                [(ngModel)]="misterioso.porcentaje_ticket" required />
+                [(ngModel)]="misterioso.porcentaje_ticket" min="0" max="2.2" step="0.01" required />
             <div [hidden]="!(editForm.controls.porcentaje_ticket?.dirty && editForm.controls.porcentaje_ticket?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.porcentaje_ticket?.errors?.required" jhiTranslate="entity.validation.required">
@@ -73,6 +73,14 @@
                 <small class="form-text text-danger"
                     [hidden]="!editForm.controls.porcentaje_ticket?.errors?.number" jhiTranslate="entity.validation.number">
                     This field should be a number.
+                </small>
+                <small class="form-text text-danger"
+                       [hidden]="!editForm.controls.porcentaje_ticket?.errors?.min" jhiTranslate="entity.validation.min" translateValues="{ min: 0 }">
+                    This field should be at least 0.
+                </small>
+                <small class="form-text text-danger"
+                       [hidden]="!editForm.controls.porcentaje_ticket?.errors?.max" jhiTranslate="entity.validation.max" translateValues="{ max: 2.2 }">
+                    This field should be at least 0.
                 </small>
             </div>
         </div>
@@ -108,7 +116,13 @@
                     [hidden]="!editForm.controls.valor_base_max?.errors?.number" jhiTranslate="entity.validation.number">
                     This field should be a number.
                 </small>
+
             </div>
+            <small class="form-text text-danger"
+                   [hidden]="misterioso.valor_base_max > misterioso.valor_base_min" >
+                El valor base maximo no puede ser igual o menor que el valor base minimo.
+            </small>
+
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="wplayMisteriosoApp.misterioso.minimo_ticket" for="field_minimo_ticket">Minimo Ticket</label>
@@ -138,12 +152,20 @@
                     [hidden]="!editForm.controls.maximo_ticket?.errors?.number" jhiTranslate="entity.validation.number">
                     This field should be a number.
                 </small>
+
+
+
             </div>
+            <small class="form-text text-danger"
+                   [hidden]="misterioso.maximo_ticket > misterioso.minimo_ticket" >
+                El maximo ticket no puede ser igual o menor que el minimo
+            </small>
+
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="wplayMisteriosoApp.misterioso.ganador" for="field_ganador">Ganador</label>
             <input type="text" class="form-control" name="ganador" id="field_ganador"
-                [(ngModel)]="misterioso.ganador"  />
+                [(ngModel)]="misterioso.ganador"  disabled/>
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="wplayMisteriosoApp.misterioso.estado" for="field_estado">Estado</label>
@@ -198,6 +220,10 @@
                     This field should be a number.
                 </small>
             </div>
+            <small class="form-text text-danger"
+                   [hidden]="misterioso.cantidad_apuestas_maxima > misterioso.cantidad_apuestas_minima" >
+                La maxima cantidad de apuestas  no puede ser igual o menor que la minima cantidad apuestas.
+            </small>
         </div>
 
     </div>

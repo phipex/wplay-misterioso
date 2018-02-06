@@ -37,6 +37,9 @@ export class MisteriosoDialogComponent implements OnInit {
 
     save() {
         this.isSaving = true;
+        this.misterioso.acumulado = 0;
+        this.misterioso.cantidad_apuestas = 0;
+
         if (this.misterioso.id !== undefined) {
             this.subscribeToSaveResponse(
                 this.misteriosoService.update(this.misterioso));

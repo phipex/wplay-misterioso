@@ -37,11 +37,11 @@
             <tr *ngFor="let misterioso of misteriosos ;trackBy: trackId">
                 <td><a [routerLink]="['../misterioso', misterioso.id ]">{{misterioso.id}}</a></td>
                 <td>{{misterioso.nombre}}</td>
-                <td>{{misterioso.acumulado}}</td>
+                <td>${{misterioso.acumulado | currency:'COL':'symbol':'4.2-2'}}</td>
                 <td>{{misterioso.cantidad_apuestas}}</td>
-                <td>{{misterioso.porcentaje_ticket}}</td>
-                <td>{{misterioso.valor_base_min}}</td>
-                <td>{{misterioso.valor_base_max}}</td>
+                <td>{{misterioso.porcentaje_ticket}}%</td>
+                <td>${{misterioso.valor_base_min | currency:'COL':'symbol':'4.2-2'}}</td>
+                <td>${{misterioso.valor_base_max | currency:'COL':'symbol':'4.2-2'}}</td>
                 <td>{{misterioso.minimo_ticket}}</td>
                 <td>{{misterioso.maximo_ticket}}</td>
                 <td>{{misterioso.ganador}}</td>
