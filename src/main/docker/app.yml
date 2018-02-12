@@ -2,6 +2,7 @@ version: '2'
 services:
     wplay_misterioso-app:
         image: wplay_misterioso
+        restart: always
         environment:
             - SPRING_PROFILES_ACTIVE=prod,swagger
             - SPRING_DATASOURCE_URL=jdbc:postgresql://wplay_misterioso-postgresql:5432/wplay_misterioso
@@ -9,6 +10,7 @@ services:
         ports:
             - 8080:8080
     wplay_misterioso-postgresql:
+        restart: always
         extends:
             file: postgresql.yml
             service: wplay_misterioso-postgresql
